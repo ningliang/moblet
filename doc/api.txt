@@ -47,6 +47,10 @@ base params
       s3_bucket: string,
       s3_capture_key: string,    // Full capture
       s3_thumbnail_key: string   // A reduced thumbnail size - could be done server side
+      width: float,
+      height: float
+      thumbnail_width: float,
+      thumbnail_height: float
     }
 
 

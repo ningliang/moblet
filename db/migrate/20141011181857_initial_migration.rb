@@ -32,7 +32,7 @@ class InitialMigration < ActiveRecord::Migration
       t.timestamps
     end
     add_index :app_sessions, [:last_event_device_time]
-    add_index :app_sessions, [:app_instance_id, :last_event_device_time]
+    add_index :app_sessions, [:app_instance_id, :last_event_device_time], name: :as_app_last_device_time
 
     create_table :app_events do |t|
       t.references :app_session
@@ -47,6 +47,10 @@ class InitialMigration < ActiveRecord::Migration
       t.string :s3_bucket
       t.string :s3_capture_key
       t.string :s3_thumbnail_key
+      t.float :width
+      t.float :height
+      t.float :thumbnail_width
+      t.float :thumbnail_height
       t.datetime :device_time
       t.timestamps
     end
