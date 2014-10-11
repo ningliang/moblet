@@ -56,10 +56,10 @@ base params
 
 
 Basic API logic:
-  OK Find the app by api_key
-  OK Find or create an app_instance for the app, device_type, device_id, app_user_name
-  OK Find or create an app_user for the app_instance
-  OK Find or create the last applicable session based on last_event_device_time under this app_instance
+  Find the app by api_key
+  Find or create an app_instance for the app, device_type, device_id, app_user_name
+  Find or create an app_user for the app_instance
+  Find or create the last applicable session based on last_event_device_time under this app_instance
   Create the app event or capture
   Update the last_event_device_time
 
