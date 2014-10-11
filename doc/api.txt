@@ -1,0 +1,67 @@
+Endpoints:
+  POST /app_events
+  POST /app_captures
+
+base params
+  {
+    api_key: string,
+
+    timestamp: datetime, // time on device
+
+    // Specific installation and user of an app on a device
+    app_instance: {
+      device_type: string,
+      device_id: string,
+      app_user_name: string,
+
+      app_user: {
+        first_name: string,
+        last_name: string,
+        email: string
+      }
+    }
+
+    // Requires one and only one of the following
+    app_event: ...
+    app_capture: ...
+  }
+
+
+  app_event params
+
+    {
+      name: string,
+      params: object
+    }
+
+    specific params for event names:
+      touch - { x: float, y: float, screen_width: float, screen_height: float }
+      swipe - { start_x: float, start_y: float, end_x: float, end_y: float, screen_width: float, screen_height: float }
+      start_app - { }
+      close_app - { }
+
+
+  app_capture params
+
+    {
+      s3_bucket: string,
+      s3_capture_key: string,    // Full capture
+      s3_thumbnail_key: string   // A reduced thumbnail size - could be done server side
+    }
+
+
+
+Basic API logic:
+  Find the app by api_key
+  Find or create an app_instance for the app, device_type, device_id, app_user_name
+  Find or create an app_user for the app_instance
+  Find or create the last applicable session based on last_event_device_time under this app_instance
+  Create the app event or capture
+  Update the last_event_device_time
+
+
+Down the road - secure the API:
+  1) Store the secret on the server side
+  2) Set an aggressive expires_at, append it to the params
+  3) Sign using the secret (hash serialized params + secret)
+  4) Server side check signature for authenticity, expires_at to prevent replay attacks

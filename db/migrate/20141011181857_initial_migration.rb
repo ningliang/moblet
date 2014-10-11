@@ -12,24 +12,27 @@ class InitialMigration < ActiveRecord::Migration
       t.string :first_name
       t.string :last_name
       t.string :email
-      t.string :app_user_id
       t.timestamps
     end
+    add_index :app_users, [:email], unique: true
 
     create_table :app_instances do |t|
       t.references :app
       t.references :app_user
       t.string :device_type
       t.string :device_id
+      t.string :app_user_name
       t.timestamps
     end
 
     create_table :app_sessions do |t|
       t.references :app_instance
-      t.datetime :start_time
-      t.datetime :end_time
+      t.datetime :start_device_time
+      t.datetime :last_event_device_time
       t.timestamps
     end
+    add_index :app_sessions, [:last_event_device_time]
+    add_index :app_sessions, [:app_instance_id, :last_event_device_time]
 
     create_table :app_events do |t|
       t.references :app_session

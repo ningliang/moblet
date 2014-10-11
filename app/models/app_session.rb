@@ -4,6 +4,6 @@ class AppSession < ActiveRecord::Base
   has_many :app_captures
 
   validates :app_instance_id, presence: true
-  validates :start_time, presence: true
-  validates :last_event_time, presence: true
+  validates :start_device_time, presence: true
+  validates :last_event_device_time, presence: true
 end
